@@ -14,12 +14,14 @@ order1=0
 pick =0
 quantity_pick=0
 item_pick=0
+
 check_total=0
 item_price1 = 0 
+check_out=0
 #Main menu
 def Main_Menu():
     while True:
-
+        global total
         print("\nMain Menu:")
         print("1. Start a new order")
         print("2. Close the program")
@@ -90,23 +92,36 @@ def add_item():
 # quantity
 def quantity():
     quantity_pick=int(input("enter the Quantity u want"))
-
+    global pick_quantity
     pick_quantity= item_price1 * quantity_pick
     print(item_price1)
     print(pick_quantity)
+
 
 #quantity
 
 #show item
 def show_items():
+    
     for index, item in enumerate(items,start=1) :
             item_name , item_price = item
             print(f"{index} {item_name}: {item_price} $") 
             
 #show item
+#check_total
+total=0
+def checkTotal():
+    global total
+    total  = total + pick_quantity
+    print("you r total now is :  ",total)
+    
+    
+#chechout
+def checkout():
+    
 
-
-
+    check_out=total
+    print(check_out)
 Main_Menu()
 
 
