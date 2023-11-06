@@ -1,0 +1,119 @@
+from operator import index, truediv
+
+
+items = [
+    ["tomato", 1],
+    ["potato", 2],
+    ["chocolate", 3],
+    ["soap", 0.5] ]
+coupons=[
+    ['A',15],
+    ['B',30],
+    ['C',50] ]
+order1=0 
+pick =0
+quantity_pick=0
+item_pick=0
+check_total=0
+item_price1 = 0 
+#Main menu
+def Main_Menu():
+    while True:
+
+        print("\nMain Menu:")
+        print("1. Start a new order")
+        print("2. Close the program")
+        choice = input("Enter your choice: ")
+        if choice == "1": 
+            print("new order")
+            new_order_menu()
+        elif choice == "2":
+            print("bye bye")
+        else:
+            print("invalid choice . Please try again")
+#main menu
+
+#newm manu add
+def new_order_menu():
+    while True:
+        print("\nOrder Menu:")
+        print("1. Add a new item")
+        print("2. Check the total of the bill")
+        print("3. Add a coupon")
+        print("4. Checkout")
+        action = input("Enter your choice: ")
+
+        if action == "1":
+            add_item()
+        elif action == "2":
+            checkTotal()
+        elif action == "3":
+            addCoupon()
+        elif action == "4":
+            checkout()
+            break
+        else:
+            print("Invalid choice. Please try again.")
+#new menu add
+
+def add_item():
+  show_items()
+  global item_price1  # By using global item_price1, you're telling Python to use the global variable item_price1 rather than
+                      #creating a new local variable. 
+                      # This way, you maintain the value of item_price1 across different functions.
+  pick=input("enter the item u want")
+  if pick == "1":
+        item_price1 = items[0][1]
+        print("Enter the quantity")
+        quantity()
+  elif pick == "2":
+        item_price1 = items[1][1]
+        print("Enter the quantity")
+        quantity()
+  elif pick == "3":
+        item_price1 = items[2][1]
+        print("Enter the quantity")
+        quantity()
+  elif pick == "4":
+        item_price1 = items[3][1]
+        print("Enter the quantity")
+        quantity()
+  else:
+        print("Invalid item number.")
+
+
+
+
+   
+#new menu add
+
+# quantity
+def quantity():
+    quantity_pick=int(input("enter the Quantity u want"))
+
+    pick_quantity= item_price1 * quantity_pick
+    print(item_price1)
+    print(pick_quantity)
+
+#quantity
+
+#show item
+def show_items():
+    for index, item in enumerate(items,start=1) :
+            item_name , item_price = item
+            print(f"{index} {item_name}: {item_price} $") 
+            
+#show item
+
+
+
+Main_Menu()
+
+
+
+        
+
+
+
+
+
