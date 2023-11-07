@@ -14,7 +14,7 @@ order1=0
 pick =0
 quantity_pick=0
 item_pick=0
-
+total=0
 check_total=0
 item_price1 = 0 
 check_out=0
@@ -109,7 +109,7 @@ def show_items():
             
 #show item
 #check_total
-total=0
+
 def checkTotal():
     global total
     total  = total + pick_quantity
@@ -122,6 +122,28 @@ def checkout():
 
     check_out=total
     print(check_out)
+    print(" you r totale check out and all is : ",check_out)
+
+  
+#add coupon
+def addCoupon():
+      
+ coupons_pick=int(input("enter you r coupons "))
+ if coupons_pick >= 15:
+     global total
+     total=total%coupons_pick
+     print("you r total with the coupon is : ",total)
+ 
+
+
+   
+
+
+#add coupons
+
+
+
+
 Main_Menu()
 
 
