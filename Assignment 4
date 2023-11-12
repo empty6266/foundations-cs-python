@@ -1,0 +1,144 @@
+# hello
+
+
+from ast import Break
+
+OrderHistory = []
+
+MyCities = ["beirut", "jounieh", "broummana", "baabda", "aley", "byblos", "beit mery",
+    "brummana", "dhour el choueir", "metn", "tripoli"]
+MyDrivers = ['ali', 'charbel', 'chady', 'tony']
+MyDriversLocation = [["Ali", ["Beirut", "Jounieh", "Byblos"]],[["chady", ["broummana", "baabda", "aley"]],]]
+DriverRouteAdded = {}
+
+def ShowOrderHistory():
+    for i in OrderHistory:
+        print(i)
+
+def ShowMyDrivers():
+    for i in MyDrivers:
+        print(i)
+def ShowMyCities():
+    for i in  MyCities:
+        print(i)
+
+
+def MainMenu():
+    while True:
+        
+        print("\nTransportation Company System:")
+        print("1. Add a city")
+        print("2. Add a driver")
+        print("3. Add a city to the route of a driver")
+        print("4. Remove a city from a driver's route")
+        print("5. Check deliverability of a package")
+        print("6. Quit")
+        Main_input = input("Enter you r choice : ")
+        if Main_input == "1":
+            AddCity()
+        elif Main_input == '2':
+            AddDriverRoute()
+        elif Main_input == '3':
+            Pick3()
+        else:
+            print("Bye")
+            break
+
+def AddDriver():
+    AddDriver_input = input("Enter the name of the driver you wish to add : ")
+    if AddDriver_input in MyCities:
+
+        print("Driver already exists ")
+        ShowMyDrivers()
+    else:
+        print("Driver added")
+        MyCities.append(AddDriver_input)
+        ShowMyDrivers()
+def AddCity():
+    
+    AddCity_input = input("Enter the name of the city you wish to add : ")
+    if AddCity_input in MyCities:
+
+        print("City already exists ")
+        ShowMyCities()
+    else:
+        print("City added")
+        MyCities.append(AddCity_input)
+        ShowMyCities()
+
+
+def AddDriverRoute():
+    c=0
+    
+    while c == 0:
+
+     Driver_input = input("Enter the name of the driver : ")
+     if Driver_input in MyDrivers:
+
+                   print("Driver picked : ",Driver_input)
+                   DriverRouteAdded[Driver_input] = []
+     else:
+        print("Driver not found")
+        
+
+    
+     City_input = input("Enter the name of the city  : ")
+     if City_input in MyCities:
+
+       print("City picked : ",City_input)
+        
+     else:
+          print("City not found")
+     City_Delivery_input = input("Enter the name of the city to deliver : ")
+     if City_Delivery_input in MyCities:
+
+       print("City deliver : ",City_Delivery_input)
+       c=1
+       print("Route Added ")
+       Locations = {"pick_up": City_input, "delivery": City_Delivery_input}
+       DriverRouteAdded[Driver_input].append(Locations)
+       print("The route picked : Driver name : ",DriverRouteAdded)
+       OrderHistory.append(DriverRouteAdded.copy())
+       break
+     else:
+          print("City not found")
+
+
+          
+    
+
+
+def Pick3():
+    while True:
+        
+        AddDriver()
+        AddCity()
+
+        if True:
+            print('0. To add to the beginning of the route') 
+            print('-1. To add to the end of the route')
+            print("#. (any other number) to add that city to the given index")
+            Pick_choice = input("Enter you r choice : " ) 
+            if Pick_choice == '0':
+                print(OrderHistory)
+                order_index = int(input("Choose an order: ")) - 1
+                if 0 <= order_index < len(OrderHistory):  # Check if the index is valid
+                    # Extracting pick_up from the selected order
+                    pick_up = OrderHistory[order_index][MyDrivers[0]][0]['pick_up']
+                    Add_begi = input(f"Add at the beginning of the route ({pick_up}): ")
+                else:
+                    print("Invalid order index")
+            elif Pick_choice == '1':
+                print(OrderHistory)
+                order_index = int(input("Choose an order: ")) - 1
+                if 0 <= order_index < len(OrderHistory):  # Check if the index is valid
+                    # Extracting delivery from the selected order
+                    delivery = OrderHistory[order_index][MyDrivers[0]][0]['delivery']
+                    Add_to_the_end = input(f"Add at the end of the route ({delivery}): ")
+                else:
+                    print("Invalid order index")
+        else:
+            print("OrderHistory is empty. Please add a driver and a city first.")
+
+
+MainMenu()
