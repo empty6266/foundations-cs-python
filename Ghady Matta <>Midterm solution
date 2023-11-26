@@ -1,0 +1,854 @@
+#   [ https://www.youtube.com/watch?v=K48S3Sv1jwY how to use json ]
+#from selenium import    webdriver
+#import selenium.webdriver
+#import pandas as pd
+import subprocess
+import tkinter
+from tkinter import BROWSE
+from urllib import request
+import webbrowser#   [ https://www.youtube.com/watch?v=K48S3Sv1jwY how to use json ]
+#from selenium import    webdriver
+#import selenium.webdriver
+#import pandas as pd
+import subprocess
+import tkinter
+from tkinter import BROWSE
+from urllib import request
+import webbrowser
+
+import json
+from urllib.request import urlopen
+
+from tkinter.tix import InputOnly
+from xmlrpc.server import list_public_methods #import jsnon to provide a way  to work with json data
+ 
+#browser= webdriver.Chrome(executable_path= "Drivers/chromedriver.exe")
+tabs = {
+
+    "Google": {"URL": "google.com",  },# nested tabs already created
+   "Github": {"URL": "github.com", }}
+    # tabs already created 
+
+open_tab=["There S NO OPENED Tab"]
+
+# Serialize to JSON and save to file
+#with open("tabs.json", "w") as file: # used the with open function to be able to write o the file name tabs.jason in write mode ( 'w' )
+    #json.dump(tabs, file, indent=2) #used jsondump to save the data to the file created
+#tabs the dictionary created file the file created indent = 2 for better spacing
+# with open('data/fruit.json','w') as file:
+# json.dump(fruits, file )    
+
+import os # a way to interact with pc os
+# os . get current working directory to
+#  print("Current Working Directory:", os.getcwd())        # see where my file are saved on my pc 
+
+
+
+
+
+
+
+
+
+ 
+#if the admin chooses (1), the system should allow the user to add a new tab by
+
+#asking for the Title and the URL of the website.
+input_user_title=[]
+input_user_url=[]
+tab=[]
+def CreateNewTab():
+    global url_value
+    global input_user_title
+    global input_user_url
+    global open_tab
+    print("!.   CREATE   NEW    TAB      ! ! ")  
+    input_user_title=input("## Enter  The  Title  of  he  Tab  u  wan  to  add  :  ##")
+    input_user_url=input(" ## Enter  The  URL  of the  Tab  u  wan  to  add ## \n please enter the URL WITH OUT USING WWW example   google.com ")
+    print('The Title : ', input_user_title,'\n', ' The URL : ', input_user_url)
+    tab={ "URL": input_user_url, 'Nested Tab':  [] }
+    tabs[input_user_title]=tab 
+    #{"Title": "GitHub", "URL": "github.com", "NestedTabs": []
+    opend_tab={"Title": input_user_title, "URL": input_user_url}
+    print("  Tab Successfully Added ! ")
+    print("ALL THE TABS :  ")
+    for i in tabs:
+        print(i)
+    #print(tabs)
+    with open("tabs.json", "w") as file: # used the with open function to be able to write o the file name tabs.jason in write mode ( 'w' )
+     json.dump(tabs, file, indent=2)
+     
+     #webbrowser.open_new_tab( input_user_url )
+     while True:
+      input_user=input("    1.    to  go  Back to  Main  Menu : \n     2.    To  open  the  added  tab  ")
+      
+      print(input_user)
+      if input_user == '1':
+          
+          break
+      
+      elif input_user == '2':
+          print()
+          #browser.get(input_user_url)
+          webbrowser.open_new_tab(input_user_url)
+          open_tab=opend_tab["Title"] # name of each opend tab
+          print('  index  of  the  oppend  tab  ',open_tab)
+          #Showhtml()
+          
+          #open the webbrowser in a new tab using the newly added URL 
+          #pid_opened_tab = webbrowser.getpid()
+          #print(pid_opened_tab)
+
+          input_user=input(' 1. the tab oppend \n 2. the tab did not oppen ')
+          if input_user == '2':
+           print(" if the tab didnot load re write the url correctly without http or  //  or www ... use (  github.com )")
+           input_user=input(" enter the correct url : ")
+           input_user_url = input_user
+           webbrowser.open_new_tab(input_user_url) # it wil open in internet explorer better
+          url_value=input_user_url
+
+      else:
+          print("Inavalid format re enter vlaue")
+          
+
+    #print(tabs) check if saved
+##if the admin chooses (1), the system should allow the user to add a new tab by
+
+
+
+#If the admin chooses (2), the system should permit the user to input the index of the
+#tab they wish to close. If no index is provided, the system will close the last opened tab.
+
+def CloseTabs():
+    global convert23
+    print(" input the index of the tab you wish to close . : ")
+    input_index=int(input("Enter the index" ))
+    convert23=list(tabs.items()) # convert to be able to use it
+    if 0<= input_index <len(tabs):
+        hi=convert23[input_index]
+        #hi=tabs.pop(input_index)
+        os.system("taskkill /im iexplore.exe /f") # close the internet explorer tab using the os task kil iexplore
+        
+        print(hi,'  :  is  the  tab  u closed ')
+    else:
+        print(" some thing went wrong ")
+
+
+
+        #f the admin chooses (3), the system should enable the user to enter the index of 
+        #the tab for displaying its content. If no index is provided, the system will display
+        ##the content of the last opened tab. Note: 'Displaying' in this context refers to printing
+           #the HTML content of the URL associated with the tab. Conduct some research on
+         #web scraping for more insights 
+#show html stil not woking wl c why ## it worked i guess
+
+def Showhtml():
+    # to get the actual link
+    # then check tha open tab 
+    # then read the page hlt and decoded in latin -1 to be able to read it 
+    url = 'http://'+ url_value
+    page = urlopen(url)
+    html_bytes = page.read()
+    html = html_bytes.decode("latin-1")
+    print(html)
+    print("END HTML")
+
+
+def SwitchBetweenTabs():
+    #global url_value
+    global user_index
+    print("1.open recently opened tab")
+    print("2. Open tabs index") 
+    print(" 3. to show the website html ")
+    input_user=input("Enter you r choice :") 
+    if input_user == '1':
+        #print("hello world")
+        #if input_user_url in tab:
+            
+          print(input_user_url,'is the most recently opend tab')
+        #else:
+             #print("no recently openned tabs .invalid!!!")
+
+
+    elif    input_user == '2':
+         print(" Enter the index of the Tab u wish to open: ")
+         print(tabs)
+         input_index=int(input("Enter the index : " ))
+
+
+         if input_index ==0:
+             # cs already made tab
+           tab0=list(tabs["Google"])
+           
+           print(tabs["Google"],"is the tab u wish to oooooooppppppppeeeeeeennnnnnnnn")
+         elif input_index ==1: 
+             # already made tab
+           tab0=list(tabs["Github"])
+           
+           print(tabs["Github"],"is the tab u wish to oooooooppppppppeeeeeeennnnnnnnn")
+         else:
+             # here is where the new added tab is 
+             if 0<= input_index < len(tabs) :
+                 tab0=(tabs[input_user_title])
+                 
+                 print(tab0,"is the tab u wish to oooooooppppppppeeeeeeennnnnnnnn")
+    elif input_user =='3':
+         print("showing current opened website html ") 
+         # to go and check the opend tab html 
+         Showhtml()
+
+           
+
+         
+    
+       
+
+           
+    
+        
+#If the admin chooses (4), the system should print the titles of all open tabs. If there
+#are nested tabs, display them hierarchically
+
+
+def ShowOpenedTab():
+    print("all tabs \n",tabs)
+    print("Opended tabs : \n" , open_tab)
+    # pre get the opened tabl url or  tile
+
+
+
+
+   # If the admin chooses (5), the system should enable users to create nested tabs by
+#specifying the index of the parent tab where they want to insert additional tabs.
+#After entering the index, the system should prompt the user to input the titles and
+#contents for the new tabs.
+
+
+
+#addign nested tabssssssssssssssss 
+def AddNestedTab():
+    global hi_nested
+    global hi
+    global nested_tab
+    global input_user11
+    print(" Enter the Index Of Wich Tab u Would Like to Add a Nested Tab")
+    input_user11=int(input("Index : "))
+    # Convert dictionary to list of tuples
+    convert=list(tabs.items())
+    if 0<= input_user11 < len(tabs) :
+        # got i bit confused needs cleaning
+        hi=convert[input_user11]
+        print('tab to add the nested :',hi)
+        input_nested=input("Enter the Nested List Title : ")
+        input_nested1=input("Enter the Nested 'URL : ' ")
+        input_nested2=input("Enter the Nested List Nested Tab URL : ")
+        #nevermind all that go to AddNestedTAbTotabs()
+        nested_tab=input_nested, {"URL": input_nested1, "NestedTab Second URL ": input_nested2}
+        print('nessted tab to add :',nested_tab) 
+        
+        #convert1=list(nested_tab)
+        
+        
+        AddNestedTAbTotabs()
+# starting code 
+def AddNestedTAbTotabs():
+    
+    input_user=int(input_user11)
+    if input_user == 0:
+       # cs already added 
+
+       tabs['Google']['NestedTab'] = nested_tab
+       
+       print(tabs)
+    elif input_user ==1: 
+        # cs already added
+       tabs['Github']['NestedTab'] = nested_tab
+       
+       print(tabs)
+    else: 
+    #convert=list(tabs.items())
+      if 0<= input_user < len(tabs) :
+          # here is where add and create the new tab with it nested list
+        print(" New user inputed tab and nested ")
+
+        tabs[input_user_title]['Nested Tab'] = nested_tab
+        
+        print(tabs)
+
+
+    #if input_user == 2:
+    #   tabs[input_user_title]['Nested Tab']=(hi_nested)
+       #abs[input_user11]=hi_nested
+     #  print("this is  tabs[input_user_title]: ",tabs[input_user_title] )
+      # print("this is hi_nested: ",hi_nested)
+       #print('this is all tabs ',tabs)
+    #if input_user11 == 3:
+     #  tabs[input_user_title]['Nested Tab']=(hi_nested)
+      # #abs[input_user11]=hi_nested
+       #print(tabs)
+   # if input_user11 == 0:
+    #   tab0=list(tabs["Google"])
+     #  tab0=(hi_nested)
+       #tabs["Google"]=tab0
+      # #abs[input_user11]=hi_nested
+       #print(tabs)
+    #if input_user11 == 1:
+     #  tab0=list(tabs["Github"])
+      # tab0=(hi_nested)
+       #tabs["Github"]=tab0
+       #abs[input_user11]=hi_nested
+       #print(tabs)
+    with open("tabs.json", "w") as file: # used the with open function to be able to write o the file name tabs.jason in write mode ( 'w' )
+              json.dump(tabs, file, indent=2)
+
+
+# Print the updated tabs list
+
+#show al tabs sorted by title
+def SortTabs():
+    print(tabs) 
+    print("Sorting Tabs ")
+    
+    convert=list(tabs) # convert to list to sort the title of the tabs
+    sorted=convert
+    sorted.sort()
+    print(sorted)
+
+
+
+ 
+       
+#def handle_circular_references(tabs):
+    #return deepcopy(tabs)
+
+# saving data
+def SaveTabsToJson():
+    with open("tabs.json", "w") as file: # used the with open function to be able to write o the file name tabs.jason in write mode ( 'w' )
+              json.dump(tabs, file, indent=2) # dumb file to jsnon
+    print("Saving data")
+    with open("tabs.json", "r") as file:#locate the file in jason using 2 instead of w
+              a=json.load(file) # file in jason are now in a
+              print("Data saved to json") 
+              print(json.dumps(a, indent=2)) #print inde2 
+              MainMenu()
+
+
+       
+
+
+def OpenTextDocument():
+    # Command to open Notepad
+    command = "notepad.exe" # to open the text document
+    try:
+        # Execute the command
+        subprocess.run(command, shell=True)#check if it cans i wl open the notepad using the command
+    except Exception as e:
+        print(f"An error occurred: {e}") #if it cant 
+        # can use os command to copy paste a list value in the notepad
+    #OpenTextDocument()
+    MainMenu()
+# Call the function to open an empty Notepad document
+     
+    
+
+#import tabsss 
+def ImportTabs():
+   file_path = input("Enter the file path: ") # if error 13 occures its and adminstration acces in you r windows so that visual studio can do action 
+   #pd.read_table("Desktop/data.txt") 
+
+   try:
+        with open(file_path, "r") as file:
+            document_content = file.read()
+        print("File content:\n", document_content)
+
+        # If the content is in JSON format, you can process it
+        try:
+            json_data = json.loads(document_content)
+            print("JSON data:\n", json_data)
+            tabs.update(json_data)
+        except json.JSONDecodeError:
+            print("Content is not valid JSON.")
+   except FileNotFoundError:
+    print("File not found. Please enter a valid file path.")
+        # Add other processing logic as needed
+    
+     
+ 
+
+        # to export tabs wrong dont need it 
+    #print('\n')
+    #print(tabs)
+    #print('\n')
+    #print('copy paste the value to you r notepad \n use : Ctrl+a to sellect all\n Ctrl+c to copy \nCtrl+v to paste to your tabs')
+    #MainMenu() 
+    #print( 'exit note back after saving to go back to main menu ')
+    #OpenTextDocument()
+    MainMenu()
+
+# starting cod/3 /v6 
+
+
+def MainMenu():
+    while True:
+        
+     print( '1.   Open Tab\n'
+           ,'2.   Close Tab\n'
+           ,'3.   Switch Tab\n'
+           ,'4.   Display All Tabs\n'
+           ,'5.   Open Nested Tab\n'
+           ,'6.   Sort All Tabs\n'
+           ,'7.   Save Tabs\n',
+         '8.   Import Tabs\n'
+         ,'9.  Exit\n') 
+     input_user=input("Enter you r choice :  ")
+     if input_user == '1':
+         print('Open new tab ' )
+         CreateNewTab() # first tabs created bu user
+
+     elif input_user == '2':
+         print(" Close Tab ")
+         CloseTabs() # close tabs
+     elif input_user == '3':
+         SwitchBetweenTabs() 
+     elif input_user == '4':
+         ShowOpenedTab() 
+     elif input_user =='5':
+         AddNestedTab() 
+     elif input_user == '6':
+         SortTabs() 
+     elif   input_user == '7':
+         SaveTabsToJson()
+
+     elif input_user =='8':
+         ImportTabs()
+     elif  input_user == '9':
+         print("Exiting program")
+         break
+     else:
+         print(" Wrong format\n  Please  re enter a valid integer value ")
+         print(" \n")
+
+
+
+# the exiting program need a bit of fix need to do it 2 to 3 timex xd
+MainMenu()
+#CloseTabs()
+
+
+import json
+from urllib.request import urlopen
+
+from tkinter.tix import InputOnly
+from xmlrpc.server import list_public_methods #import jsnon to provide a way  to work with json data
+ 
+#browser= webdriver.Chrome(executable_path= "Drivers/chromedriver.exe")
+tabs = {
+
+    "Google": {"URL": "google.com",  },# nested tabs already created
+   "Github": {"URL": "github.com", }}
+    # tabs already created 
+
+open_tab=["There S NO OPENED Tab"]
+
+# Serialize to JSON and save to file
+#with open("tabs.json", "w") as file: # used the with open function to be able to write o the file name tabs.jason in write mode ( 'w' )
+    #json.dump(tabs, file, indent=2) #used jsondump to save the data to the file created
+#tabs the dictionary created file the file created indent = 2 for better spacing
+# with open('data/fruit.json','w') as file:
+# json.dump(fruits, file )    
+
+import os # a way to interact with pc os
+# os . get current working directory to
+#  print("Current Working Directory:", os.getcwd())        # see where my file are saved on my pc 
+
+
+
+
+
+
+
+
+
+ 
+#if the admin chooses (1), the system should allow the user to add a new tab by
+
+#asking for the Title and the URL of the website.
+input_user_title=[]
+input_user_url=[]
+tab=[]
+def CreateNewTab():
+    global url_value
+    global input_user_title
+    global input_user_url
+    global open_tab
+    print("!.   CREATE   NEW    TAB      ! ! ")  
+    input_user_title=input("## Enter  The  Title  of  he  Tab  u  wan  to  add  :  ##")
+    input_user_url=input(" ## Enter  The  URL  of the  Tab  u  wan  to  add ## \n please enter the URL WITH OUT USING WWW example   google.com ")
+    print('The Title : ', input_user_title,'\n', ' The URL : ', input_user_url)
+    tab={ "URL": input_user_url, 'Nested Tab':  [] }
+    tabs[input_user_title]=tab 
+    #{"Title": "GitHub", "URL": "github.com", "NestedTabs": []
+    opend_tab={"Title": input_user_title, "URL": input_user_url}
+    print("  Tab Successfully Added ! ")
+    print("ALL THE TABS :  ")
+    for i in tabs:
+        print(i)
+    #print(tabs)
+    with open("tabs.json", "w") as file: # used the with open function to be able to write o the file name tabs.jason in write mode ( 'w' )
+     json.dump(tabs, file, indent=2)
+     
+     #webbrowser.open_new_tab( input_user_url )
+     while True:
+      input_user=input("    1.    to  go  Back to  Main  Menu : \n     2.    To  open  the  added  tab  ")
+      
+      print(input_user)
+      if input_user == '1':
+          
+          break
+      
+      elif input_user == '2':
+          print()
+          #browser.get(input_user_url)
+          webbrowser.open_new_tab(input_user_url)
+          open_tab=opend_tab["Title"] # name of each opend tab
+          print('  index  of  the  oppend  tab  ',open_tab)
+          #Showhtml()
+          
+          #open the webbrowser in a new tab using the newly added URL 
+          #pid_opened_tab = webbrowser.getpid()
+          #print(pid_opened_tab)
+
+          input_user=input(' 1. the tab oppend \n 2. the tab did not oppen ')
+          if input_user == '2':
+           print(" if the tab didnot load re write the url correctly without http or  //  or www ... use (  github.com )")
+           input_user=input(" enter the correct url : ")
+           input_user_url = input_user
+           webbrowser.open_new_tab(input_user_url) # it wil open in internet explorer better
+          url_value=input_user_url
+
+      else:
+          print("Inavalid format re enter vlaue")
+          
+
+    #print(tabs) check if saved
+##if the admin chooses (1), the system should allow the user to add a new tab by
+
+
+
+#If the admin chooses (2), the system should permit the user to input the index of the
+#tab they wish to close. If no index is provided, the system will close the last opened tab.
+
+def CloseTabs():
+    global convert23
+    print(" input the index of the tab you wish to close . : ")
+    input_index=int(input("Enter the index" ))
+    convert23=list(tabs.items()) # convert to be able to use it
+    if 0<= input_index <len(tabs):
+        hi=convert23[input_index]
+        #hi=tabs.pop(input_index)
+        os.system("taskkill /im iexplore.exe /f") # close the internet explorer tab using the os task kil iexplore
+        
+        print(hi,'  :  is  the  tab  u closed ')
+    else:
+        print(" some thing went wrong ")
+
+
+
+        #f the admin chooses (3), the system should enable the user to enter the index of 
+        #the tab for displaying its content. If no index is provided, the system will display
+        ##the content of the last opened tab. Note: 'Displaying' in this context refers to printing
+           #the HTML content of the URL associated with the tab. Conduct some research on
+         #web scraping for more insights 
+#show html stil not woking wl c why ## it worked i guess
+
+def Showhtml():
+    # to get the actual link
+    # then check tha open tab 
+    # then read the page hlt and decoded in latin -1 to be able to read it 
+    url = 'http://'+ url_value
+    page = urlopen(url)
+    html_bytes = page.read()
+    html = html_bytes.decode("latin-1")
+    print(html)
+    print("END HTML")
+
+
+def SwitchBetweenTabs():
+    #global url_value
+    global user_index
+    print("1.open recently opened tab")
+    print("2. Open tabs index") 
+    print(" 3. to show the website html ")
+    input_user=input("Enter you r choice :") 
+    if input_user == '1':
+        #print("hello world")
+        #if input_user_url in tab:
+            
+          print(input_user_url,'is the most recently opend tab')
+        #else:
+             #print("no recently openned tabs .invalid!!!")
+
+
+    elif    input_user == '2':
+         print(" Enter the index of the Tab u wish to open: ")
+         print(tabs)
+         input_index=int(input("Enter the index : " ))
+
+
+         if input_index ==0:
+             # cs already made tab
+           tab0=list(tabs["Google"])
+           
+           print(tabs["Google"],"is the tab u wish to oooooooppppppppeeeeeeennnnnnnnn")
+         elif input_index ==1: 
+             # already made tab
+           tab0=list(tabs["Github"])
+           
+           print(tabs["Github"],"is the tab u wish to oooooooppppppppeeeeeeennnnnnnnn")
+         else:
+             # here is where the new added tab is 
+             if 0<= input_index < len(tabs) :
+                 tab0=(tabs[input_user_title])
+                 
+                 print(tab0,"is the tab u wish to oooooooppppppppeeeeeeennnnnnnnn")
+    elif input_user =='3':
+         print("showing current opened website html ") 
+         # to go and check the opend tab html 
+         Showhtml()
+
+           
+
+         
+    
+       
+
+           
+    
+        
+#If the admin chooses (4), the system should print the titles of all open tabs. If there
+#are nested tabs, display them hierarchically
+
+
+def ShowOpenedTab():
+    print("all tabs \n",tabs)
+    print("Opended tabs : \n" , open_tab)
+    # pre get the opened tabl url or  tile
+
+
+
+
+   # If the admin chooses (5), the system should enable users to create nested tabs by
+#specifying the index of the parent tab where they want to insert additional tabs.
+#After entering the index, the system should prompt the user to input the titles and
+#contents for the new tabs.
+
+
+
+#addign nested tabssssssssssssssss 
+def AddNestedTab():
+    global hi_nested
+    global hi
+    global nested_tab
+    global input_user11
+    print(" Enter the Index Of Wich Tab u Would Like to Add a Nested Tab")
+    input_user11=int(input("Index : "))
+    # Convert dictionary to list of tuples
+    convert=list(tabs.items())
+    if 0<= input_user11 < len(tabs) :
+        # got i bit confused needs cleaning
+        hi=convert[input_user11]
+        print('tab to add the nested :',hi)
+        input_nested=input("Enter the Nested List Title : ")
+        input_nested1=input("Enter the Nested 'URL : ' ")
+        input_nested2=input("Enter the Nested List Nested Tab URL : ")
+        #nevermind all that go to AddNestedTAbTotabs()
+        nested_tab=input_nested, {"URL": input_nested1, "NestedTab Second URL ": input_nested2}
+        print('nessted tab to add :',nested_tab) 
+        
+        #convert1=list(nested_tab)
+        
+        
+        AddNestedTAbTotabs()
+# starting code 
+def AddNestedTAbTotabs():
+    
+    input_user=int(input_user11)
+    if input_user == 0:
+       # cs already added 
+
+       tabs['Google']['NestedTab'] = nested_tab
+       
+       print(tabs)
+    elif input_user ==1: 
+        # cs already added
+       tabs['Github']['NestedTab'] = nested_tab
+       
+       print(tabs)
+    else: 
+    #convert=list(tabs.items())
+      if 0<= input_user < len(tabs) :
+          # here is where add and create the new tab with it nested list
+        print(" New user inputed tab and nested ")
+
+        tabs[input_user_title]['Nested Tab'] = nested_tab
+        
+        print(tabs)
+
+
+    #if input_user == 2:
+    #   tabs[input_user_title]['Nested Tab']=(hi_nested)
+       #abs[input_user11]=hi_nested
+     #  print("this is  tabs[input_user_title]: ",tabs[input_user_title] )
+      # print("this is hi_nested: ",hi_nested)
+       #print('this is all tabs ',tabs)
+    #if input_user11 == 3:
+     #  tabs[input_user_title]['Nested Tab']=(hi_nested)
+      # #abs[input_user11]=hi_nested
+       #print(tabs)
+   # if input_user11 == 0:
+    #   tab0=list(tabs["Google"])
+     #  tab0=(hi_nested)
+       #tabs["Google"]=tab0
+      # #abs[input_user11]=hi_nested
+       #print(tabs)
+    #if input_user11 == 1:
+     #  tab0=list(tabs["Github"])
+      # tab0=(hi_nested)
+       #tabs["Github"]=tab0
+       #abs[input_user11]=hi_nested
+       #print(tabs)
+    with open("tabs.json", "w") as file: # used the with open function to be able to write o the file name tabs.jason in write mode ( 'w' )
+              json.dump(tabs, file, indent=2)
+
+
+# Print the updated tabs list
+
+#show al tabs sorted by title
+def SortTabs():
+    print(tabs) 
+    print("Sorting Tabs ")
+    
+    convert=list(tabs) # convert to list to sort the title of the tabs
+    sorted=convert
+    sorted.sort()
+    print(sorted)
+
+
+
+ 
+       
+#def handle_circular_references(tabs):
+    #return deepcopy(tabs)
+
+# saving data
+def SaveTabsToJson():
+    with open("tabs.json", "w") as file: # used the with open function to be able to write o the file name tabs.jason in write mode ( 'w' )
+              json.dump(tabs, file, indent=2) # dumb file to jsnon
+    print("Saving data")
+    with open("tabs.json", "r") as file:#locate the file in jason using 2 instead of w
+              a=json.load(file) # file in jason are now in a
+              print("Data saved to json") 
+              print(json.dumps(a, indent=2)) #print inde2 
+              MainMenu()
+
+
+       
+
+
+def OpenTextDocument():
+    # Command to open Notepad
+    command = "notepad.exe" # to open the text document
+    try:
+        # Execute the command
+        subprocess.run(command, shell=True)#check if it cans i wl open the notepad using the command
+    except Exception as e:
+        print(f"An error occurred: {e}") #if it cant 
+        # can use os command to copy paste a list value in the notepad
+    #OpenTextDocument()
+    MainMenu()
+# Call the function to open an empty Notepad document
+     
+    
+
+#import tabsss 
+def ImportTabs():
+   file_path = input("Enter the file path: ") # if error 13 occures its and adminstration acces in you r windows so that visual studio can do action 
+   #pd.read_table("Desktop/data.txt") 
+
+   try:
+        with open(file_path, "r") as file:
+            document_content = file.read()
+        print("File content:\n", document_content)
+
+        # If the content is in JSON format, you can process it
+        try:
+            json_data = json.loads(document_content)
+            print("JSON data:\n", json_data)
+            tabs.update(json_data)
+        except json.JSONDecodeError:
+            print("Content is not valid JSON.")
+   except FileNotFoundError:
+    print("File not found. Please enter a valid file path.")
+        # Add other processing logic as needed
+    
+     
+ 
+
+        # to export tabs wrong dont need it 
+    #print('\n')
+    #print(tabs)
+    #print('\n')
+    #print('copy paste the value to you r notepad \n use : Ctrl+a to sellect all\n Ctrl+c to copy \nCtrl+v to paste to your tabs')
+    #MainMenu() 
+    #print( 'exit note back after saving to go back to main menu ')
+    #OpenTextDocument()
+    MainMenu()
+
+# starting cod/3 /v6 
+
+
+def MainMenu():
+    while True:
+        
+     print( '1.   Open Tab\n'
+           ,'2.   Close Tab\n'
+           ,'3.   Switch Tab\n'
+           ,'4.   Display All Tabs\n'
+           ,'5.   Open Nested Tab\n'
+           ,'6.   Sort All Tabs\n'
+           ,'7.   Save Tabs\n',
+         '8.   Import Tabs\n'
+         ,'9.  Exit\n') 
+     input_user=input("Enter you r choice :  ")
+     if input_user == '1':
+         print('Open new tab ' )
+         CreateNewTab() # first tabs created bu user
+
+     elif input_user == '2':
+         print(" Close Tab ")
+         CloseTabs() # close tabs
+     elif input_user == '3':
+         SwitchBetweenTabs() 
+     elif input_user == '4':
+         ShowOpenedTab() 
+     elif input_user =='5':
+         AddNestedTab() 
+     elif input_user == '6':
+         SortTabs() 
+     elif   input_user == '7':
+         SaveTabsToJson()
+
+     elif input_user =='8':
+         ImportTabs()
+     elif  input_user == '9':
+         print("Exiting program")
+         break
+     else:
+         print(" Wrong format\n  Please  re enter a valid integer value ")
+         print(" \n")
+
+
+# #the exiting program need a bit of fix need to do it 2 to 3 times xd
+
+MainMenu()
+#CloseTabs()
